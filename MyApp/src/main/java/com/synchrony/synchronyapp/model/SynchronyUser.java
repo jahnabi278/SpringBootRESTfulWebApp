@@ -1,19 +1,19 @@
-package com.terra.myapp.model;
+package com.synchrony.synchronyapp.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
-@AllArgsConstructor
 @Entity
-public class Users {
+@ToString
+public class SynchronyUser {
 	@Id
-	private int id;
 	private String userName;
 	private String passWord;
 	private String name;
 	private String city;
 	private String mobile;
+
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.synchrony.synchronyapp.model.SynchronyUser;
 import com.synchrony.synchronyapp.model.UserCredential;
+import com.synchrony.synchronyapp.openfeign.ImgurInterface;
+
 import com.synchrony.synchronyapp.service.SynchronyService;
 
 @RestController
@@ -20,6 +22,9 @@ public class SynAppController {
 
 	@Autowired
 	SynchronyService synService;
+
+	//@Autowired
+	//ImgurInterface imgurInterface;
 
 	@PostMapping("/signup")
 	public ResponseEntity<String> ceate(@RequestBody SynchronyUser synUser) {
@@ -42,7 +47,6 @@ public class SynAppController {
 		return synService.getUser(userName);
 
 	}
-	
 	// imgur API
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.synchrony.synchronyapp.logger.Logger;
 import com.synchrony.synchronyapp.model.SynchronyUser;
 import com.synchrony.synchronyapp.repo.SynchoronyJSPRepository;
 
@@ -20,12 +21,14 @@ public class SynAppJSPController {
 
 	@RequestMapping("/")
 	public String home() {
+		Logger.info("Index page ......");
 		return "home.jsp";
 	}
 	
 	@RequestMapping("/addSynUser")
 	public String addSynUser(SynchronyUser user) {
 		synRepo.save(user);
+		Logger.info("User created");
 		return "home.jsp";
 	}
 	@RequestMapping("/validateUser")

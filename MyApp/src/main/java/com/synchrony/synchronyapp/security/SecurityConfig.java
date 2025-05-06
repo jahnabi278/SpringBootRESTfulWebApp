@@ -1,5 +1,6 @@
 package com.synchrony.synchronyapp.security;
 
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,8 +17,8 @@ import com.synchrony.synchronyapp.logger.Logger;
 
 @Configuration
 @EnableWebSecurity
+//@EnableOAuth2Sso
 public class SecurityConfig {
-
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -34,12 +35,19 @@ public class SecurityConfig {
 		Logger.info(" admin and user object created ");
 		return new InMemoryUserDetailsManager(admin, user);
 	}
-	
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	    http.csrf().disable()
-	        .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-	    return http.build();
+		http.csrf().disable().authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+		return http.build();
 	}
 
+	/*public void configure(HttpSecurity http) {
+		try {
+			http.csrf().disable().authorizeHttpRequests().requestMatchers("/home").permitAll().anyRequest()
+					.authenticated();
+		} catch (Exception e) {
+			Logger.error("Exception :" + e);
+		}
+	}*/
 }

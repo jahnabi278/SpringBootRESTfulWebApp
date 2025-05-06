@@ -1,65 +1,48 @@
 # SpringBootRESTfulWebApp
 Spring Boot RESTful web application that integrates with the Imgur API to manage user accounts and images 
-
-1. Project Setup
-Tech Stack:
-
-Spring Boot 3.x.x
-
-Java 17
-
-H2 (in-memory DB)
-
-Spring Data JPA
-
-Spring Security (optional for basic auth or OAuth2)
-
-Feign/RestTemplate for Imgur API
-
-JUnit 5 for testing
-
-Logging via SLF4J / Logback
-
-Maven or Gradle
-
-📁 2. Project Structure
-arduino
-Copy
-Edit
-com.example.synchrony
+📁 1. Project Structure
+com.synchrony.synchronyapp
 ├── controller
-│   └── UserController.java
-│   └── ImageController.java
+│   └── ImgurController.java -- for imgur api (upload,view,delete)
+│   └── SynAppController.java -- RestController (signin,signup,viewuser,viewAllUsers)
+    └── SynAppJSPController.java -- JSP Controller with MODEL VIEW ARCHITECTURE (home.jsp,login.jsp,logout.jsp...)
 ├── service
-│   └── UserService.java
-│   └── ImageService.java
+│   └── ImgurService.java -- To call the feignClient services 
+│   └── SynchronyService.java  -- To create,validate and retrieve user
 ├── repository
-│   └── UserRepository.java
-│   └── ImageRepository.java
+│   └── SynchoronyJSPRepository.java -- Crud Repository
+│   └── SynchronyRepository.java -- JPA Repository
 ├── model
-│   └── User.java
-│   └── Image.java
-├── config
-│   └── ImgurClientConfig.java
-│   └── SecurityConfig.java (optional)
-├── dto
-│   └── UserDto.java
-│   └── ImageDto.java
-├── util
-│   └── ImgurApiClient.java
+│   └── SynchronyUser.java
+│   └── ImagePixelData.java
+├── client
+│   └── ImgurFeignClient.java
+├── response
+│   └── UploadImageResponse.java
+│   └── ViewImageResponse.java
+    --- DeleteImageResponse
+├── logger
+│   └── Logger.java
+ ---security
+│   └── SecurityConfig.java -- Spring Security implemented 
 └── SynchronyApplication.java
-👤 3. User Functionality
+
+👤 2. User Functionality
 Register User
-Endpoint: POST /api/users/register
+Endpoint: POST 
+(http://localhost:8090/app/signup)
+(http://localhost:8090/app/signin)
 
-Data: username, password, basic info
+Endpoint: GET 
+http://localhost:8090/app/allusers
+http://localhost:8090/app/user/user123
 
-Store in H2 DB (password should be hashed if security is enabled)
+Store in H2 DB
 
 Authenticate User
 Basic auth via Spring Security (or implement token-based manually)
 
-🖼️ 4. Image Functionality (Authenticated)
+🖼️ 3. Image Functionality (Authenticated)
 Upload Image
 Endpoint: POST /api/images/upload
 
@@ -77,7 +60,7 @@ Endpoint: DELETE /api/images/{id}
 
 Use stored deleteHash with Imgur API to delete image
 
-🌐 5. Imgur API Integration
+🌐 4. Imgur API Integration
 Use Imgur’s anonymous image upload API:
 
 Client-ID via Authorization header (Authorization: Client-ID {clientId})
@@ -90,12 +73,7 @@ DELETE https://api.imgur.com/3/image/{deleteHash} – Delete
 
 GET https://api.imgur.com/3/image/{imageId} – View (optional)
 
-🔐 6. Security (Optional)
-Add Basic Auth or OAuth2 using Spring Security
-
-Store credentials securely (e.g., encoded passwords)
-
-🧪 7. Testing
+🧪 5. Testing
 Use JUnit5 for:
 
 Controller tests (with MockMvc)
@@ -103,6 +81,4 @@ Controller tests (with MockMvc)
 Service layer tests (unit)
 
 Repository tests (data integrity)
-
-Optional: Follow TDD
 

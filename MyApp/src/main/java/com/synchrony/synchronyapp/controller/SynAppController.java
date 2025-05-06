@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.synchrony.synchronyapp.model.SynchronyUser;
 import com.synchrony.synchronyapp.model.UserCredential;
 import com.synchrony.synchronyapp.openfeign.ImgurInterface;
+
 import com.synchrony.synchronyapp.service.SynchronyService;
 
 @RestController
@@ -46,7 +47,6 @@ public class SynAppController {
 		return synService.getUser(userName);
 
 	}
-
 	// imgur API
 
 }

@@ -1,0 +1,659 @@
+{
+	"info": {
+		"_postman_id": "0479d7cf-c194-4bc3-8a2c-69f398201811",
+		"name": "My APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10521440"
+	},
+	"item": [
+		{
+			"name": "Image",
+			"item": [
+				{
+					"name": "Image",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Client-ID {{clientId}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/image/{{imageHash}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"image",
+								"{{imageHash}}"
+							]
+						},
+						"description": "Get information about an image."
+					},
+					"response": []
+				},
+				{
+					"name": "Image Upload",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"clientId\", \"546c25a59c58ad7\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// This endpoint is critical to the test flow, ",
+									"// so this stops the request cycle if any of these tests error.",
+									"postman.setNextRequest('end');",
+									"",
+									"var res = JSON.parse(responseBody);",
+									"",
+									"var imageHash = res.data.id;",
+									"var imageDeleteHash = res.data.deletehash;",
+									"tests['Returns 7 char alphanumeric id'] = /^[a-z0-9]{7}$/i.test(imageHash);",
+									"tests['Returns 15 char alhpanumeric deletehash'] = /^[a-z0-9]{15}$/i.test(imageDeleteHash);",
+									"",
+									"postman.setEnvironmentVariable('imageHash', imageHash);",
+									"postman.setEnvironmentVariable('imageDeleteHash', imageDeleteHash);",
+									"",
+									"postman.setNextRequest('Account Images'); // Account -> Account Images"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Client-ID {{clientId}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "image/video",
+									"type": "file",
+									"src": "/home/flakrim/Downloads/GHJQTpX.jpeg"
+								},
+								{
+									"key": "type",
+									"value": "file",
+									"description": "file, url, base64, raw",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Simple upload",
+									"description": "The title of the content ",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This is a simple image upload in Imgur",
+									"description": "The description of the content ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/image",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"image"
+							]
+						},
+						"description": "Upload a new image or video.\n\n#### Accepted Image Formats\n\n| MIME Type |\n| --- |\n| image/jpeg |\n| image/jpg |\n| image/gif |\n| image/png |\n| image/apng |\n| image/tiff |\n\n#### Accepted Video Formats\n\n| MIME Type |\n| --- |\n| video/mp4 |\n| video/webm |\n| video/x-matroska |\n| video/quicktime |\n| video/x-flv |\n| video/x-msvideo |\n| video/x-ms-wmv |\n| video/mpeg |"
+					},
+					"response": [
+						{
+							"name": "Sample Anonymous Upload",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Client-ID {{clientId}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/home/flakrim/Downloads/GHJQTpX.jpeg"
+										},
+										{
+											"key": "type",
+											"value": "image",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "Simple upload",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "This is a simple image upload in Imgur",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://api.imgur.com/3/image",
+									"protocol": "https",
+									"host": [
+										"api",
+										"imgur",
+										"com"
+									],
+									"path": [
+										"3",
+										"image"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Authorization, Content-Type, Accept, X-Mashape-Authorization, IMGURPLATFORM, IMGURUIDJAFO, SESSIONCOUNT, IMGURMWBETA, IMGURMWBETAOPTIN",
+									"name": "Access-Control-Allow-Headers",
+									"description": ""
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, PUT, POST, DELETE, OPTIONS",
+									"name": "Access-Control-Allow-Methods",
+									"description": ""
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"name": "Access-Control-Allow-Origin",
+									"description": ""
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-RateLimit-ClientLimit, X-RateLimit-ClientRemaining, X-RateLimit-UserLimit, X-RateLimit-UserRemaining, X-RateLimit-UserReset",
+									"name": "Access-Control-Expose-Headers",
+									"description": ""
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
+									"name": "Cache-Control",
+									"description": ""
+								},
+								{
+									"key": "Connection",
+									"value": "close",
+									"name": "Connection",
+									"description": ""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip",
+									"name": "Content-Encoding",
+									"description": ""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": ""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 May 2017 16:28:10 GMT",
+									"name": "Date",
+									"description": ""
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f8e9f040e2b6ba2ebf5c836309b5cb50cf4b7368\"",
+									"name": "ETag",
+									"description": ""
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 19 Nov 1981 08:52:00 GMT",
+									"name": "Expires",
+									"description": ""
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache",
+									"name": "Pragma",
+									"description": ""
+								},
+								{
+									"key": "Server",
+									"value": "nginx",
+									"name": "Server",
+									"description": ""
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"name": "Transfer-Encoding",
+									"description": ""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding",
+									"name": "Vary",
+									"description": ""
+								},
+								{
+									"key": "X-Post-Rate-Limit-Limit",
+									"value": "1250",
+									"name": "X-Post-Rate-Limit-Limit",
+									"description": ""
+								},
+								{
+									"key": "X-Post-Rate-Limit-Remaining",
+									"value": "1250",
+									"name": "X-Post-Rate-Limit-Remaining",
+									"description": ""
+								},
+								{
+									"key": "X-Post-Rate-Limit-Reset",
+									"value": "-2",
+									"name": "X-Post-Rate-Limit-Reset",
+									"description": ""
+								},
+								{
+									"key": "X-origin-ip",
+									"value": "172.16.2.228",
+									"name": "X-origin-ip",
+									"description": ""
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"httpOnly": false,
+									"domain": "imgur.com",
+									"path": "/",
+									"secure": false,
+									"value": "259f1853850b21cb4df8bc5bd15b7884",
+									"key": "IMGURSESSION"
+								},
+								{
+									"expires": "Invalid Date",
+									"httpOnly": true,
+									"domain": "imgur.com",
+									"path": "/",
+									"secure": false,
+									"value": "1",
+									"key": "_nc"
+								},
+								{
+									"expires": "Invalid Date",
+									"httpOnly": false,
+									"domain": "api.imgur.com",
+									"path": "/",
+									"secure": false,
+									"value": "upload.i-054973f4f04ffec62.production",
+									"key": "UPSERVERID"
+								}
+							],
+							"body": "{\n    \"status\": 200,\n    \"success\": true,\n    \"data\": {\n        \"id\": \"JRBePDz\",\n        \"deletehash\": \"EvHVZkhJhdNClgY\",\n        \"account_id\": null,\n        \"account_url\": null,\n        \"ad_type\": null,\n        \"ad_url\": null,\n        \"title\": \"Simple upload\",\n        \"description\": \"This is a simple image upload in Imgur\",\n        \"name\": \"\",\n        \"type\": \"image/jpeg\",\n        \"width\": 600,\n        \"height\": 750,\n        \"size\": 54757,\n        \"views\": 0,\n        \"section\": null,\n        \"vote\": null,\n        \"bandwidth\": 0,\n        \"animated\": false,\n        \"favorite\": false,\n        \"in_gallery\": false,\n        \"in_most_viral\": false,\n        \"has_sound\": false,\n        \"is_ad\": false,\n        \"nsfw\": null,\n        \"link\": \"https://i.imgur.com/JRBePDz.jpeg\",\n        \"tags\": [],\n        \"datetime\": 1708424380,\n        \"mp4\": \"\",\n        \"hls\": \"\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Image Deletion (Un-Authed)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var res = JSON.parse(responseBody);",
+									"",
+									"tests[\"Successful delete\"] = res.success === true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Client-ID {{clientId}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/image/{{imageDeleteHash}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"image",
+								"{{imageDeleteHash}}"
+							]
+						},
+						"description": "Deletes an image.\n\n#### Response Model: [Basic](https://api.imgur.com/models/basic)"
+					},
+					"response": []
+				},
+				{
+					"name": "Image Deletion (Authed)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// This endpoint is critical to the test flow, ",
+									"// so this stops the request cycle if any of these tests error.",
+									"postman.setNextRequest('end');",
+									"",
+									"var res = JSON.parse(responseBody);",
+									"",
+									"tests['Status code is 200'] = (responseCode.code === 200);",
+									"tests['Image deletion was successful'] = res.success === true && res.data === true;",
+									"",
+									"postman.setNextRequest('end'); // stop running tests by setting next request to an invalid name / id"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/image/{{imageHash}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"image",
+								"{{imageHash}}"
+							]
+						},
+						"description": "Deletes an image.\n\n#### Response Model: [Basic](https://api.imgur.com/models/basic)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Image Information (Un-Authed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Client-ID {{clientId}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Heart",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This is an image of a heart outline.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/image/{{imageDeleteHash}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"image",
+								"{{imageDeleteHash}}"
+							]
+						},
+						"description": "Updates the title or description of an image.\n\n#### Response Model: [Basic](https://api.imgur.com/models/basic)\n\n#### Parameters\n\n| Key         | Required | Description                   |\n|-------------|----------|-------------------------------|\n| title       | optional | The title of the image.       |\n| description | optional | The description of the image. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Image Information (Authed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Heart",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "This is an image of a heart outline.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/image/{{imageHash}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"image",
+								"{{imageHash}}"
+							]
+						},
+						"description": "Updates the title or description of an image.\n\n#### Response Model: [Basic](https://api.imgur.com/models/basic)\n\n#### Parameters\n\n| Key         | Required | Description                   |\n|-------------|----------|-------------------------------|\n| title       | optional | The title of the image.       |\n| description | optional | The description of the image. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Favorite an Image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://api.imgur.com/3/image/{{imageHash}}/favorite",
+							"protocol": "https",
+							"host": [
+								"api",
+								"imgur",
+								"com"
+							],
+							"path": [
+								"3",
+								"image",
+								"{{imageHash}}",
+								"favorite"
+							]
+						},
+						"description": "Favorite an image with the given ID. The user is required to be logged in to favorite the image.\n\n\n#### Response Model: [Basic](https://api.imgur.com/models/basic)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SingUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userName\": \"raman123\",\n    \"passWord\": \"pass123\",\n    \"name\": \"Raman kr\",\n    \"city\": \"Jhansi\",\n    \"mobile\": \"8877887788\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/app/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"app",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "allusers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/app/allusers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"app",
+						"allusers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getByUsername",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/app/user/raman123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"app",
+						"user",
+						"raman123"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

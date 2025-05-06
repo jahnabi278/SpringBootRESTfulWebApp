@@ -2,13 +2,14 @@ package com.synchrony.synchronyapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.synchrony.synchronyapp.logger.Logger;
 
 @SpringBootApplication
 @ComponentScan("com.synchrony.synchronyapp")
-
+@EnableFeignClients
 public class SynchronyApplication {
 
 	public static void main(String[] args) {

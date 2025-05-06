@@ -1,12 +1,15 @@
 package com.synchrony.synchronyapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.security.Principal;
 import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.synchrony.synchronyapp.logger.Logger;
@@ -56,4 +59,10 @@ public class SynAppJSPController {
         return "users.jsp"; // maps to users.jsp
     }
 
+	@RequestMapping("user")
+	@ResponseBody
+	public Principal user(Principal principal) {
+		return principal;
+	}
+	
 }
